@@ -1,6 +1,6 @@
-const { describe, it, expect } = require('vitest');
-const path = require('path');
-const cdnConfig = require('../src/config/cdn.js');
+import { describe, it, expect } from 'vitest';
+import path from 'path';
+import cdnConfig from '../src/config/cdn.js';
 
 describe('CDN Path Validation', () => {
   it('should validate paths within the CDN directory', () => {
