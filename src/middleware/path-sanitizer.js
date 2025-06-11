@@ -12,11 +12,36 @@ function createPathSanitizerMiddleware(cdnBasePath) {
 
   return (req, res, next) => {
     try {
+      // Check for known directory traversal attempts
+      const unsafePaths = [
+        '../', 
+        '..\\', 
+        './', 
+        '.\\', 
+        '/etc/', 
+        '\\etc\\'
+      ];
+
+      // Convert the requested path to lowercase for case-insensitive checks
+      const requestedPath = req.path.toLowerCase();
+
+      // Check if the path contains any unsafe segments
+      const hasUnsafePath = unsafePaths.some(unsafePath => 
+        requestedPath.includes(unsafePath)
+      );
+
+      if (hasUnsafePath) {
+        return res.status(403).json({ 
+          error: 'Access denied', 
+          message: 'Requested file is outside the permitted directory' 
+        });
+      }
+
       // Normalize the requested path (remove any .. or . segments)
-      const requestedPath = path.normalize(req.path);
+      const normalizedPath = path.normalize(req.path);
 
       // Resolve the full path, ensuring it's within the CDN base directory
-      const fullPath = path.resolve(cdnBasePath, requestedPath.replace(/^\//, ''));
+      const fullPath = path.resolve(cdnBasePath, normalizedPath.replace(/^\//, ''));
 
       // Check if the resolved path is within the base directory
       const isWithinBaseDir = fullPath.startsWith(path.resolve(cdnBasePath));
