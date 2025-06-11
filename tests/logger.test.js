@@ -18,7 +18,7 @@ describe('Logger Utility', () => {
             success: true
         });
 
-        expect(consoleSpy).toHaveBeenCalled();
+        expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('/test/file.txt'));
         consoleSpy.mockRestore();
     });
 
@@ -28,7 +28,7 @@ describe('Logger Utility', () => {
 
         logFileRetrievalError(testError, '/test/file.txt');
 
-        expect(consoleErrorSpy).toHaveBeenCalled();
+        expect(consoleErrorSpy).toHaveBeenCalledWith(expect.stringContaining('Test error'));
         consoleErrorSpy.mockRestore();
     });
 
