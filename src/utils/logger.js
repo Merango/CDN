@@ -55,6 +55,7 @@ const logger = createLogger();
  * @param {boolean} [options.success=true] - Whether retrieval was successful
  */
 export const logFileRetrieval = ({ filePath, clientIp, success = true }) => {
+    console.log(`File retrieval: ${filePath} by ${clientIp}, Success: ${success}`);
     const logMethod = success ? 'info' : 'warn';
     logger[logMethod]('File Retrieval', {
         filePath,
@@ -70,6 +71,7 @@ export const logFileRetrieval = ({ filePath, clientIp, success = true }) => {
  * @param {string} filePath - Path of the file that caused the error
  */
 export const logFileRetrievalError = (error, filePath) => {
+    console.error(`File retrieval error: ${error.message} for file ${filePath}`);
     logger.error('File Retrieval Error', {
         error: error.message,
         filePath,
