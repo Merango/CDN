@@ -1,5 +1,5 @@
-const path = require('path');
-const cdnConfig = require('../config/cdn.js');
+import path from 'path';
+import cdnConfig from '../config/cdn.js';
 
 /**
  * Middleware to validate CDN file paths
@@ -24,4 +24,4 @@ const cdnPathValidator = (req, res, next) => {
   next();
 };
 
-module.exports = cdnPathValidator;
+export default cdnPathValidator;
