@@ -1,4 +1,4 @@
-const path = require('path');
+import path from 'path';
 
 /**
  * Configuration for CDN file serving
@@ -8,7 +8,7 @@ const cdnConfig = {
    * Base directory for serving files
    * Ensures files can only be served from this directory
    */
-  BASE_CDN_DIR: path.resolve(__dirname, '../../cdn_files'),
+  BASE_CDN_DIR: path.resolve(process.cwd(), 'cdn_files'),
 
   /**
    * Validate if the requested file path is within the allowed CDN directory
@@ -27,4 +27,4 @@ const cdnConfig = {
   }
 };
 
-module.exports = cdnConfig;
+export default cdnConfig;
