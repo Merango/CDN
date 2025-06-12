@@ -8,7 +8,7 @@ class MockLottery {
     recordLotteryRound(potAmount: bigint, winner: string, participants: string[]) {
         this.roundCounter++;
         this.lotteryRounds[this.roundCounter] = {
-            roundId: this.roundCounter,
+            roundId: BigInt(this.roundCounter),
             potAmount,
             winner,
             timestamp: Date.now(),
@@ -61,10 +61,10 @@ describe('Lottery Round Data Retrieval', () => {
         await lottery.recordLotteryRound(potAmount, winner, participantAddresses);
 
         const totalRounds = await lottery.getTotalRounds();
-        expect(totalRounds).toBe(1n);
+        expect(Number(totalRounds)).toBe(1);
 
         const round = await lottery.getLotteryRound(1);
-        expect(round.roundId).toBe(1n);
+        expect(Number(round.roundId)).toBe(1);
         expect(round.potAmount).toBe(potAmount);
         expect(round.winner).toBe(winner);
     });
@@ -89,7 +89,7 @@ describe('Lottery Round Data Retrieval', () => {
         await lottery.recordLotteryRound(potAmount, winner, participantAddresses);
 
         const totalRounds = await lottery.getTotalRounds();
-        expect(totalRounds).toBe(2n);
+        expect(Number(totalRounds)).toBe(2);
     });
 
     it('should retrieve recent rounds', async () => {
