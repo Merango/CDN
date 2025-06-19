@@ -5,11 +5,23 @@ export class FileStorageService {
   private uploadDirectory: string;
 
   constructor(uploadDirectory: string = path.join(process.cwd(), 'uploads')) {
-    this.uploadDirectory = uploadDirectory;
+    this.uploadDirectory = path.resolve(uploadDirectory);
+  }
+
+  private validateFilePath(filename: string): void {
+    const resolvedFilePath = path.resolve(path.join(this.uploadDirectory, filename));
+    
+    // Ensure the resolved file path is within the upload directory
+    if (!resolvedFilePath.startsWith(this.uploadDirectory)) {
+      throw new Error('Invalid file path: File must be within upload directory');
+    }
   }
 
   async deleteFile(filename: string): Promise<boolean> {
     try {
+      // Validate the file path first
+      this.validateFilePath(filename);
+
       const filePath = path.join(this.uploadDirectory, filename);
       await fs.access(filePath);
       await fs.unlink(filePath);
@@ -24,6 +36,9 @@ export class FileStorageService {
 
   async fileExists(filename: string): Promise<boolean> {
     try {
+      // Validate the file path first
+      this.validateFilePath(filename);
+
       const filePath = path.join(this.uploadDirectory, filename);
       await fs.access(filePath);
       return true;
