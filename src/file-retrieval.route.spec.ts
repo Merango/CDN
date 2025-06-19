@@ -16,8 +16,7 @@ describe('FileRetrievalRoute', () => {
     status: vi.fn().mockReturnThis(),
     json: vi.fn(),
     setHeader: vi.fn(),
-    pipe: vi.fn(),
-    on: vi.fn() // Add this to simulate a writeable stream
+    send: vi.fn()
   };
 
   beforeEach(() => {
@@ -36,17 +35,15 @@ describe('FileRetrievalRoute', () => {
     mockResponse.status.mockClear();
     mockResponse.json.mockClear();
     mockResponse.setHeader.mockClear();
-    mockResponse.pipe.mockClear();
-    mockResponse.on.mockClear();
+    mockResponse.send.mockClear();
   });
 
   it('should successfully retrieve an existing file', () => {
     fileRetrievalRoute.getFile(mockRequest, mockResponse);
 
-    // Since there will be an async operation, we can relax the assertion
-    expect(mockResponse.status).not.toHaveBeenCalledWith(404);
-    expect(mockResponse.status).not.toHaveBeenCalledWith(400);
     expect(mockResponse.setHeader).toHaveBeenCalledWith('Content-Type', 'text/plain');
+    expect(mockResponse.status).toHaveBeenCalledWith(200);
+    expect(mockResponse.send).toHaveBeenCalledWith('Test content');
   });
 
   it('should return 400 for invalid file identifier', () => {
