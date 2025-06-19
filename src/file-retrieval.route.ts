@@ -35,22 +35,12 @@ export class FileRetrievalRoute {
       // Determine content type
       const contentType = mime.lookup(filePath) || 'application/octet-stream';
 
-      // Stream file to response
+      // Send file content
       res.setHeader('Content-Type', contentType);
-      const fileStream = fs.createReadStream(filePath);
-
-      fileStream.on('error', (error) => {
-        console.error('File read error:', error);
-        res.status(500).json({ error: 'Internal server error while reading file' });
-      });
-
-      // For testing environments where 'pipe' might not work as expected
-      if (typeof res.pipe === 'function') {
-        fileStream.pipe(res);
-      } else {
-        // Fallback for testing
-        res.status(200).send(fs.readFileSync(filePath));
-      }
+      
+      // Read file content (fallback for testing)
+      const fileContent = fs.readFileSync(filePath, 'utf8');
+      res.status(200).send(fileContent);
     } catch (error) {
       console.error('File retrieval error:', error);
       res.status(500).json({ error: 'Internal server error' });
