@@ -6,7 +6,7 @@
 
 /**
  * Error types with corresponding HTTP status codes and default messages
- * @type {Object}
+ * @enum {Object}
  */
 const ERROR_TYPES = {
   NOT_FOUND: {
