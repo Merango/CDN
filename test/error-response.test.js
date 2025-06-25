@@ -1,11 +1,10 @@
-import { describe, it, expect, vi } from 'vitest';
-import { createErrorResponse, createErrorLog } from '../src/utils/error-response.js';
+const { createErrorResponse, createErrorLog } = require('../src/utils/error-response.js');
 
 describe('Error Response Utility', () => {
   // Mock Express response object
   const createMockResponse = () => ({
-    status: vi.fn().mockReturnThis(),
-    json: vi.fn().mockReturnThis()
+    status: jest.fn().mockReturnThis(),
+    json: jest.fn().mockReturnThis()
   });
 
   describe('createErrorResponse', () => {
