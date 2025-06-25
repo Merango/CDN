@@ -70,22 +70,7 @@ function createErrorLog(type, message, context = {}) {
   };
 }
 
-// Support both CommonJS and ES modules
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = {
-    createErrorResponse,
-    createErrorLog,
-    ERROR_TYPES
-  };
-}
-
-export default {
-  createErrorResponse,
-  createErrorLog,
-  ERROR_TYPES
-};
-
-export {
+module.exports = {
   createErrorResponse,
   createErrorLog,
   ERROR_TYPES
