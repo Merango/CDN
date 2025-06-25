@@ -36,7 +36,7 @@ const ERROR_TYPES = {
  * @param {Object} [additionalDetails] - Optional additional error details
  * @returns {Object} HTTP response with error details
  */
-export function createErrorResponse(res, type, customMessage, additionalDetails = {}) {
+function createErrorResponse(res, type, customMessage, additionalDetails = {}) {
   // Validate input
   if (!ERROR_TYPES[type]) {
     type = 'INTERNAL_SERVER_ERROR';
@@ -61,7 +61,7 @@ export function createErrorResponse(res, type, customMessage, additionalDetails 
  * @param {Object} [context] - Additional context for logging
  * @returns {Object} Structured error object
  */
-export function createErrorLog(type, message, context = {}) {
+function createErrorLog(type, message, context = {}) {
   return {
     timestamp: new Date().toISOString(),
     type,
@@ -70,7 +70,7 @@ export function createErrorLog(type, message, context = {}) {
   };
 }
 
-export default {
+module.exports = {
   createErrorResponse,
   createErrorLog,
   ERROR_TYPES
