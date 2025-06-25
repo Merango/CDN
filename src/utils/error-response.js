@@ -70,6 +70,14 @@ function createErrorLog(type, message, context = {}) {
   };
 }
 
+// For ES module support
+export {
+  createErrorResponse,
+  createErrorLog,
+  ERROR_TYPES
+};
+
+// For CommonJS support
 module.exports = {
   createErrorResponse,
   createErrorLog,
